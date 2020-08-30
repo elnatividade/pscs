@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+</h:head>
+<h:body>
+	
+	<p:layout id="lytCadastro">
+		<p:layoutUnit id="lyuFrm" position="west" resizable="true" size="480">
+			<h:form id="frmCadastro">
+				<p:messages id="mensagens" autoUpdate="true" closable="true"/>
+				<p:panel id="pnlCadastroCliente" header="Cadastro de Cliente" style="margin-bottom:20px; width:450px;" >
+					<p:panelGrid columns="2">
+						<p:outputLabel for="iptNome" value="Nome"/>
+						<p:inputText id="iptNome" value="#{clienteBean.cliente.nome}"/>
+						
+						<p:outputLabel for="iptDataNascimento" value="Data de Nascimento"/>
+						<p:inputMask id="iptDataNascimento" value="#{clienteBean.cliente.dataNascimento}" mask="99/99/9999">
+							<f:convertDateTime pattern = "dd/mm/yyyy" timeZone="America/Sao_Paulo"/>
+						</p:inputMask>
+						
+						<p:outputLabel for="iptCpf" value="CPF"/>
+						<p:inputMask id="iptCpf" value="#{clienteBean.cliente.cpf}" mask="999.999.999-99"/>
+						
+						<p:outputLabel for="iptEndereco" value="Endereço"/>
+						<p:inputText id="iptEndereco" value="#{clienteBean.cliente.endereco}"/>
+						
+						<p:outputLabel for="iptTelefone" value="Telefone"/>
+						<p:inputMask id="iptTelefone" value="#{clienteBean.cliente.telefone}" mask="(99)9999-9999"/>
+						
+						<p:outputLabel for="iptNomeMae" value="Nome da Mãe"/>
+						<p:inputText id="iptNomeMae" value="#{clienteBean.cliente.nomeMae}"/>
+						
+						<p:outputLabel for="iptNomePai" value="Nome do Pai"/>
+						<p:inputText id="iptNomePai" value="#{clienteBean.cliente.nomePai}"/>
+					</p:panelGrid>
+					<p:commandButton id="cbtCadastrar" value="Cadastrar" rendered="#{clienteBean.exibeBotaoCadastrar()}" action="#{clienteBean.cadastrar}" process="@form" update="pnlCadastroCliente tblClientes"/>
+					<p:commandButton id="cbtAtualizar" value="Atualizar" rendered="#{clienteBean.exibeBotaoAtualizar()}" action="#{clienteBean.atualizar}" update="pnlCadastroCliente tblClientes" />
+					<p:commandButton id="cbtCancelar" value="Cancelar" action="#{clienteBean.init}" update="pnlCadastroCliente" />
+				</p:panel>
+			</h:form>
+		</p:layoutUnit>
+		
+		<p:layoutUnit id="lyuTbl" position="center">
+			<p:panel id="pnlTabelaClientes" header="Clientes Cadastrados" style="margin-bottom:20px; width:99%;" >
+				<p:dataTable id="tblClientes" var="cli" value="#{clienteBean.clientes}" emptyMessage="Nenhum Cliente Cadastrado">
+					<p:column headerText="Nome">
+            			<h:outputText value="#{cli.nome}" />
+        			</p:column>
+        			
+        			<p:column headerText="CPF">
+            			<h:outputText value="#{cli.cpf}"  />
+        			</p:column>
+        			
+        			<p:column headerText="Telefone">
+            			<h:outputText value="#{cli.telefone}"  />
+        			</p:column>
+        			
+        			<p:column headerText="Nascimento">
+            			<h:outputText value="#{cli.dataNascimento}" >
+            				<f:convertDateTime pattern = "dd/mm/yyyy" timeZone="America/Sao_Paulo"/>
+            			</h:outputText>
+        			</p:column>
+        			
+        			<p:column headerText="Ações" width="88">
+        				<p:commandButton id="cbtEditar" icon="ui-icon-pencil" update=":frmCadastro:pnlCadastroCliente" action="#{clienteBean.editar}">
+        					<f:setPropertyActionListener value="#{cli}" target="#{clienteBean.clienteEditar}" />
+        				</p:commandButton>
+        				<p:commandButton id="cbtExcluir" icon="ui-icon-trash" oncomplete="PF('dlgExcluir').show()" >
+        					<f:setPropertyActionListener value="#{cli}" target="#{clienteBean.clienteExcluir}" />
+        				</p:commandButton>
+        			</p:column>
+				
+				</p:dataTable>
+						
+			</p:panel>
+		</p:layoutUnit>
+		
+	</p:layout>
+	
+	<p:confirmDialog showEffect="fade" hideEffect="fade" widgetVar="dlgExcluir" header="Confirmação de Exclusão" message="A ação de exclusão não poderá ser desfeita, deseja continuar?" >
+		<p:commandButton title="Cancelar" value="Não" onclick="PF('dlgExcluir').hide()" />
+		<p:commandButton title="Confirmar" value="Sim" action="#{clienteBean.excluir}" oncomplete="PF('dlgExcluir').hide()" update="pnlTabelaClientes" />
+    </p:confirmDialog>
+	
+</h:body>
+</html>
