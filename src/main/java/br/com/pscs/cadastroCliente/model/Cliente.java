@@ -9,6 +9,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.br.CPF;
 
 
 @Entity
@@ -42,21 +48,26 @@ public class Cliente implements Serializable{
 	}
 	
 	@Column(name="nome", length=100)
+	@NotBlank(message="O campo Nome deve ser preenchido")
 	public String getNome() {
 		return nome;
 	}
 	
 	@Column(name="cpf", length=14)
+	@NotBlank(message="O campo CPF deve ser preenchido")
 	public String getCpf() {
 		return cpf;
 	}
 	
 	@Column(name="data_nascimento", length=10)
+	@NotNull(message="O campo Data de Nasciment deve ser preenchido")
+	@Temporal(TemporalType.DATE)
 	public Date getDataNascimento() {
 		return dataNascimento;
 	}
 
 	@Column(name="endereco", length=100)
+	@NotBlank(message="O campo Endereço deve ser preenchido")
 	public String getEndereco() {
 		return Endereco;
 	}

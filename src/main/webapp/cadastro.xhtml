@@ -67,10 +67,10 @@
         			</p:column>
         			
         			<p:column headerText="Ações" width="88">
-        				<p:commandButton id="cbtEditar" icon="ui-icon-pencil" update=":frmCadastro:pnlCadastroCliente" action="#{clienteBean.editar}">
+        				<p:commandButton id="cbtEditar" icon="ui-icon-pencil" process="@this" update=":frmCadastro:pnlCadastroCliente" action="#{clienteBean.editar}">
         					<f:setPropertyActionListener value="#{cli}" target="#{clienteBean.clienteEditar}" />
         				</p:commandButton>
-        				<p:commandButton id="cbtExcluir" icon="ui-icon-trash" oncomplete="PF('dlgExcluir').show()" >
+        				<p:commandButton id="cbtExcluir" icon="ui-icon-trash" oncomplete="PF('dlgExcluir').show()" process="@this" update=":frmCadastro:pnlCadastroCliente">
         					<f:setPropertyActionListener value="#{cli}" target="#{clienteBean.clienteExcluir}" />
         				</p:commandButton>
         			</p:column>
@@ -84,7 +84,7 @@
 	
 	<p:confirmDialog showEffect="fade" hideEffect="fade" widgetVar="dlgExcluir" header="Confirmação de Exclusão" message="A ação de exclusão não poderá ser desfeita, deseja continuar?" >
 		<p:commandButton title="Cancelar" value="Não" onclick="PF('dlgExcluir').hide()" />
-		<p:commandButton title="Confirmar" value="Sim" action="#{clienteBean.excluir}" oncomplete="PF('dlgExcluir').hide()" update="pnlTabelaClientes" />
+		<p:commandButton title="Confirmar" value="Sim" action="#{clienteBean.excluir}" oncomplete="PF('dlgExcluir').hide()" process="@this" update="pnlTabelaClientes" />
     </p:confirmDialog>
 	
 </h:body>
