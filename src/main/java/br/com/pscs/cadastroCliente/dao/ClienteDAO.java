@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import br.com.pscs.cadastroCliente.model.Cliente;
 
@@ -60,6 +61,20 @@ public class ClienteDAO implements Serializable{
 				
 		return resultado;
 
+	}
+
+
+	public Cliente pesquisaCPF(String cpf) {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("cadastroClientePU");
+		EntityManager em = emf.createEntityManager();
+		
+		try {
+			return em.createQuery(" FROM Cliente WHERE cpf = :cpf ", Cliente.class).setParameter("cpf", cpf).getSingleResult();
+			
+		} catch (NoResultException e) {
+			return null;
+		}
+			
 	}
 
 	

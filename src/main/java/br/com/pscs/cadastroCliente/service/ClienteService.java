@@ -39,5 +39,11 @@ public class ClienteService implements Serializable{
 	public Cliente atualizar(Cliente cliente) {
 		return clienteDao.atualizar(cliente);
 	}
+
+
+	public boolean verificaCPF(Cliente cliente) {
+		return clienteDao.pesquisaCPF(cliente.getCpf()) != null;
+		
+	}
 	
 }
