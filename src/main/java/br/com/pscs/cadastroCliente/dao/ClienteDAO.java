@@ -64,7 +64,7 @@ public class ClienteDAO implements Serializable{
 	}
 
 
-	public Cliente pesquisaCPF(String cpf) {
+	public Cliente pesquisarPorCPF(String cpf) {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("cadastroClientePU");
 		EntityManager em = emf.createEntityManager();
 		
@@ -75,6 +75,14 @@ public class ClienteDAO implements Serializable{
 			return null;
 		}
 			
+	}
+
+	public Cliente PesquisarPorId(Long codigo) {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("cadastroClientePU");
+		EntityManager em = emf.createEntityManager();
+		
+		return em.find(Cliente.class, codigo);
+		
 	}
 
 	

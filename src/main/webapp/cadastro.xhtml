@@ -15,16 +15,16 @@
 				<p:messages id="mensagens" autoUpdate="true" closable="true"/>
 				<p:panel id="pnlCadastroCliente" header="Cadastro de Cliente" style="margin-bottom:20px; width:450px;" >
 					<p:panelGrid columns="2">
-						<p:outputLabel for="iptNome" value="Nome"/>
-						<p:inputText id="iptNome" value="#{clienteBean.cliente.nome}"/>
+						<p:outputLabel for="iptNome" value="Nome" />
+						<p:inputText id="iptNome" value="#{clienteBean.cliente.nome}" required="true" />
 						
 						<p:outputLabel for="iptDataNascimento" value="Data de Nascimento"/>
-						<p:inputMask id="iptDataNascimento" value="#{clienteBean.cliente.dataNascimento}" mask="99/99/9999">
+						<p:inputMask id="iptDataNascimento" value="#{clienteBean.cliente.dataNascimento}" mask="99/99/9999" required="true" >
 							<f:convertDateTime pattern = "dd/mm/yyyy" timeZone="America/Sao_Paulo"/>
 						</p:inputMask>
 						
 						<p:outputLabel for="iptCpf" value="CPF"/>
-						<p:inputMask id="iptCpf" value="#{clienteBean.cliente.cpf}" mask="999.999.999-99"/>
+						<p:inputMask id="iptCpf" value="#{clienteBean.cliente.cpf}" mask="999.999.999-99" required="true"/>
 						
 						<p:outputLabel for="iptEndereco" value="Endereço"/>
 						<p:inputText id="iptEndereco" value="#{clienteBean.cliente.endereco}"/>

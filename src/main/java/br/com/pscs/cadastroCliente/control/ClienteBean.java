@@ -124,18 +124,28 @@ public class ClienteBean implements Serializable{
 	}
 	
 	public String atualizar() {
-		if (existeCPF(clienteEditar)) {
+		if (podeAtualizarCPF(clienteEditar)) {
+			clienteService.atualizar(clienteEditar);
+			FacesUtil.addSuccessMessage("O cliente " + clienteEditar.getNome() + " foi atualizado com sucesso!");
+						
+		} else {
 			FacesUtil.addErrorMessage("O CPF de " + clienteEditar.getNome() + " já está cadastrado");
-			return "";
+			
 		}
 		
-		clienteService.atualizar(clienteEditar);
-		FacesUtil.addSuccessMessage("O cliente " + clienteEditar.getNome() + " foi atualizado com sucesso!");
 		init();
-		
 		return "";
+			
 	}
 	
+	private boolean podeAtualizarCPF(Cliente clienteEditar) {
+		Cliente clienteBanco = clienteService.pesquisarPorCodigo(clienteEditar);
+		
+		return (( clienteBanco.getCpf().equals(clienteEditar.getCpf()) ) || ( !existeCPF(clienteEditar)) );
+			
+	}
+
+
 	public String excluir() {
 		clienteService.excluir(clienteExcluir);
 		FacesUtil.addSuccessMessage("O cliente " + clienteExcluir.getNome() + " foi excluido com sucesso!");
@@ -153,7 +163,7 @@ public class ClienteBean implements Serializable{
 	}
 	
 	public boolean existeCPF(Cliente cliente) {
-		return clienteService.verificaCPF(cliente);
+		return clienteService.verificarCPF(cliente);
 	}
 	
 	
